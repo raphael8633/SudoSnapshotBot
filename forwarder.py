@@ -6,6 +6,8 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Callb
 # 替換成你的 bot 的 token
 TOKEN = '7255790924:AAFkzH9hVRKNsl1Isu6wGuEFZ1Cb6lSmgJc'
 CHAT_ID = '@SudoSnapshot'
+#CHAT_ID = '5503887671'
+
 #raph_debug
 DEBUG_ID = '5503887671'
 
@@ -32,7 +34,17 @@ def chat_id(update: Update, context: CallbackContext) -> None:
 
 def snapshot_text(update: Update, context: CallbackContext) -> None:
     msg = update.message
-    if '#snapshot' in msg.text:
+    #print(msg)
+    # snapshot reply msg
+    if msg.reply_to_message and '#snapshot' in msg.text:
+        reply_msg = msg.reply_to_message
+        # Forward the original message to the target channel
+        context.bot.forward_message(chat_id=CHAT_ID, from_chat_id=reply_msg.chat.id, message_id=reply_msg.message_id)
+        # Send debug information to your account
+        debug_message = f"Forwarded reply message with #snapshot from {reply_msg.chat_id} to {CHAT_ID}"
+        context.bot.send_message(chat_id=DEBUG_ID, text=debug_message)
+   # direct snapshot
+    elif msg.text and '#snapshot' in msg.text:
         # Forward the message to the target channel
         context.bot.forward_message(chat_id=CHAT_ID, from_chat_id=update.message.chat_id, message_id=update.message.message_id)
         # Send debug information to your account
@@ -43,7 +55,7 @@ def snapshot_image(update: Update, context: CallbackContext) -> None:
     msg = update.message
     #print(msg.caption)
     # 圖片檔的文字 -> msg.caption  
-    if '#snapshot' in msg.caption:
+    if msg.caption and '#snapshot' in msg.caption:
         # Forward the message to the target channel
         context.bot.forward_message(chat_id=CHAT_ID, from_chat_id=update.message.chat_id, message_id=update.message.message_id)
         # Send debug information to your account
@@ -79,3 +91,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
