@@ -34,21 +34,17 @@ def chat_id(update: Update, context: CallbackContext) -> None:
 
 def snapshot_text(update: Update, context: CallbackContext) -> None:
     msg = update.message
-    #print(msg)
-    # snapshot reply msg
-    if msg.reply_to_message and '#snapshot' in msg.text:
-        reply_msg = msg.reply_to_message
-        # Forward the original message to the target channel
-        context.bot.forward_message(chat_id=CHAT_ID, from_chat_id=reply_msg.chat.id, message_id=reply_msg.message_id)
+    if '#snapshot' in msg.text:
+        #snapshot reply msg
+        if msg.reply_to_message:
+            reply_msg = msg.reply_to_message
+            context.bot.forward_message(chat_id=CHAT_ID, from_chat_id=reply_msg.chat_id, message_id=reply_msg.message_id)
+            debug_message = f"Forwarded reply message with #snapshot from {reply_msg.chat_id} to {CHAT_ID}"
+        #direct snapshot
+        else:
+            context.bot.forward_message(chat_id=CHAT_ID, from_chat_id=msg.chat_id, message_id=msg.message_id)
+            debug_message = f"Forwarded message with #snapshot from {msg.chat_id} to {CHAT_ID}"
         # Send debug information to your account
-        debug_message = f"Forwarded reply message with #snapshot from {reply_msg.chat_id} to {CHAT_ID}"
-        context.bot.send_message(chat_id=DEBUG_ID, text=debug_message)
-   # direct snapshot
-    elif msg.text and '#snapshot' in msg.text:
-        # Forward the message to the target channel
-        context.bot.forward_message(chat_id=CHAT_ID, from_chat_id=update.message.chat_id, message_id=update.message.message_id)
-        # Send debug information to your account
-        debug_message = f"Forwarded message with #snapshot from {msg.chat_id} to {CHAT_ID}"
         context.bot.send_message(chat_id=DEBUG_ID, text=debug_message)
         
 def snapshot_image(update: Update, context: CallbackContext) -> None:
