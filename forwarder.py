@@ -3,7 +3,7 @@ from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 
 # 替換成你的 bot 的 token
-TOKEN = '7255790924:AAFkzH9hVRKNsl1Isu6wGuEFZ1Cb6lSmgJc'
+TOKEN = '7255790924:AAHAm-MsGLGmzOCjNjQPpzAvgwssdm2it_Q'
 CHAT_ID = '@SudoSnapshot'
 #CHAT_ID = '5503887671'
 ver = "202408060900"
