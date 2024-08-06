@@ -39,7 +39,7 @@ async def echo_version(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 async def daily(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     # 回覆當前群組或聊天的 ID
     chat_id = update.message.chat_id
-    await update.message.reply_text('/強行羞辱')
+    await context.bot.send_message(chat_id=chat_id, text='/強行羞辱')
 
 async def snapshot_text(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     msg = update.message
