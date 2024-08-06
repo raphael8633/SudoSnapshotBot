@@ -6,6 +6,7 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 TOKEN = '7255790924:AAFkzH9hVRKNsl1Isu6wGuEFZ1Cb6lSmgJc'
 CHAT_ID = '@SudoSnapshot'
 #CHAT_ID = '5503887671'
+ver = "202408060900"
 
 #raph_debug
 DEBUG_ID = '5503887671'
@@ -30,6 +31,15 @@ async def chat_id(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     # 回覆當前群組或聊天的 ID
     chat_id = update.message.chat_id
     await update.message.reply_text(f'The current chat ID is: {chat_id}')
+
+async def echo_version(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    chat_id = update.message.chat_id
+    await update.message.reply_text(f'current ver: {ver}')
+
+async def daily(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    # 回覆當前群組或聊天的 ID
+    chat_id = update.message.chat_id
+    await update.message.reply_text('/強行羞辱')
 
 async def snapshot_text(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     msg = update.message
@@ -71,6 +81,8 @@ def main():
     application.add_handler(CommandHandler("help", help_command))
     application.add_handler(CommandHandler("echo", echo))
     application.add_handler(CommandHandler("chatid", chat_id))
+    application.add_handler(CommandHandler("v", echo_version))
+    application.add_handler(CommandHandler("daily", daily))
 
     # 回應所有文本訊息
     application.add_handler(MessageHandler(filters.TEXT, snapshot_text))
@@ -82,3 +94,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
